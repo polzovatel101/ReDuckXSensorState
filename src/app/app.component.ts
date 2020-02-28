@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {StoreHelperService} from './store/store-helper/store-helper.service';
-import {WebSocketService} from './store/websocket/web-socket.service';
+import {StoreHelperService} from './services/store-helper/store-helper.service';
+import {WebSocketService} from './services/websocket/web-socket.service';
 import {FirstSensorWsUrl} from './constants/web-socket-urls';
 import {SensorState} from './interfaces/sensor-state.interface';
 
