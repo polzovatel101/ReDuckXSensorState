@@ -27,7 +27,7 @@ export class StoreHelperService {
     return this.getBehaviourSubjectAsObservable(key);
   }
 
-  getBehaviourSubjectAsObservable(key: string): Observable<SensorState> {
+  private getBehaviourSubjectAsObservable(key: string): Observable<SensorState> {
     try {
       this.mapNumOfCallTimes[key]++;
       this.mapNumOfCallTimes[ALL_KEY]++;
