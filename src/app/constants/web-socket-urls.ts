@@ -1,1 +1,1 @@
-export const FirstSensorWsUrl = 'ws//:localhost:4200/first-sensor';
+export const SensorWsUrl = 'ws://localhost:7000/ws';

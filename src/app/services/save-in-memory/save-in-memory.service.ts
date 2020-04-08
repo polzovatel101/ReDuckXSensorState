@@ -6,14 +6,24 @@ import {SensorState} from '../../interfaces/sensor-state.interface';
 })
 export class SaveInMemoryService {
 
-  constructor(private localStorage: Storage) { }
+  constructor() { }
 
   saveInMemory(key: string, newItem: SensorState): void {
-    this.localStorage.setItem(key, newItem.toString());
+    localStorage.setItem(key, JSON.stringify(newItem));
   }
 
   getFromMemory(key: string): SensorState {
-    const savedItem: string = this.localStorage.getItem(key);
-    return JSON.parse(savedItem);
+    const savedItem: string = localStorage.getItem(key);
+    let parsedItem: SensorState;
+
+    if (savedItem) {
+      try {
+        parsedItem = JSON.parse(savedItem);
+      } catch (e) {
+        console.error('Error in parsing value', e);
+      }
+    }
+
+    return parsedItem;
   }
 }

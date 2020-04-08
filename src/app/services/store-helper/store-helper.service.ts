@@ -1,37 +1,46 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {SensorState} from '../../interfaces/sensor-state.interface';
-import {ALL_KEY} from '../../constants/item-keys.constant';
+import {ALL_KEY, defaultMapCallTimesValue} from '../../constants/item-keys.constant';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StoreHelperService {
   private mapOfBehaviourSubjects: Map<string, BehaviorSubject<SensorState>> = new Map<string, BehaviorSubject<SensorState>>();
-  private mapNumOfCallTimes: Record<string, number> = {};
-
-  constructor() {
-    this.mapNumOfCallTimes[ALL_KEY] = 0;
-  }
+  private mapNumOfCallTimes: Record<string, number> = {...defaultMapCallTimesValue};
 
   addNewItem(key: string, value: SensorState): Observable<SensorState> {
     this.addNewItemIntoBehaviourSubject(key, value);
     return this.getBehaviourSubjectAsObservable(key);
   }
 
-  addNewValue(key: string, value: SensorState) {
-    this.addNewValueToBehaviourSubject(key, value);
-  }
-
   getValuesThread(key: string): Observable<SensorState> {
     return this.getBehaviourSubjectAsObservable(key);
+  }
+
+  getMapNumOfCallTimes(): Record<string, number> {
+    return {...this.mapNumOfCallTimes};
+  }
+
+  clearMapNumOfCallTimes() {
+   this.mapNumOfCallTimes = {...defaultMapCallTimesValue};
+  }
+
+  removeItem(key: string) {
+    this.mapOfBehaviourSubjects.delete(key);
   }
 
   private getBehaviourSubjectAsObservable(key: string): Observable<SensorState> {
     try {
       this.mapNumOfCallTimes[key]++;
       this.mapNumOfCallTimes[ALL_KEY]++;
-      return this.mapOfBehaviourSubjects.get(key).asObservable();
+      const currentSubject = this.mapOfBehaviourSubjects.get(key);
+      if (currentSubject) {
+        return currentSubject.asObservable();
+      } else {
+        throw new Error('fail to get current subject');
+      }
     } catch (err) {
       console.error('Failed to get Behaviour subject, ', err);
       return null;

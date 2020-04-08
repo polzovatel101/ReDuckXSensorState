@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { KeepInMemoryService } from './keep-in-memory.service';
+import { CacheWatcherService } from './cache-watcher.service';
 
-describe('KeepInMemoryService', () => {
+describe('CacheWatcherService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: KeepInMemoryService = TestBed.get(KeepInMemoryService);
+    const service: CacheWatcherService = TestBed.get(CacheWatcherService);
     expect(service).toBeTruthy();
   });
 });
