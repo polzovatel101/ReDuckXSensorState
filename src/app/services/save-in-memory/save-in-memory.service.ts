@@ -26,4 +26,8 @@ export class SaveInMemoryService {
 
     return parsedItem;
   }
+
+  removeFromMemory(key: string) {
+    localStorage.removeItem(key);
+  }
 }

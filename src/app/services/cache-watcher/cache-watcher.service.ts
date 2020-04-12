@@ -27,7 +27,7 @@ export class CacheWatcherService {
         const dataRecord = this.saveInMemoryService.getFromMemory(recordKey);
         if (dataRecord) {
           this.storeHelperService.addNewItem(recordKey, dataRecord);
-          // TODO: delete from memory
+          this.saveInMemoryService.removeFromMemory(recordKey);
         }
       } else if (recordKey !== ALL_KEY) {
         this.storeHelperService.getValuesThread(recordKey)
